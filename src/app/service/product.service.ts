@@ -1,47 +1,56 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DataServiceService } from './data-service.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  products: any[] = [];
+  foods: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private dataService: DataServiceService) {
 
-  getAllProducts() {
+  }
+
+
+  getAllProductss() {
     return this.http.get('assets/data.json');
+    // return this.http.get(this.dataService.apiEndpoint + '/foods').subscribe((data: any) => {
+    //   console.log(data);
+    //   this.foods = data;
+    // });
   }
 
   getProduct() {
-    return this.products;
+    return this.foods;
   }
 
   saveCart(): void {
-    localStorage.setItem('cart_items', JSON.stringify(this.products));
+    localStorage.setItem('cart_items', JSON.stringify(this.foods));
   }
 
   addToCart(addedProduct: any) {
-    this.products.push(addedProduct);
+    this.foods.push(addedProduct);
     this.saveCart();
   }
 
   loadCart(): void {
-    this.products = JSON.parse(localStorage.getItem('cart_items') as any) || [];
+    this.foods = JSON.parse(localStorage.getItem('cart_items') as any) || [];
   }
 
   productInCart(product: any): boolean {
-    return this.products.findIndex((x: any) => x.id === product.id) > -1;
+    return this.foods.findIndex((x: any) =>
+      x.id === product.id) > -1;
   }
 
   removeProduct(product: any) {
-    const index = this.products.findIndex((x: any) => x.id === product.id);
+    const index = this.foods.findIndex((x: any) => x.id === product.id);
 
     if (index > -1) {
-      this.products.splice(index, 1);
+      this.foods.splice(index, 1);
       this.saveCart();
     }
   }
-
   clearProducts() {
     localStorage.clear();
   }

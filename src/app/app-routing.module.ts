@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PaymentComponent } from './payment/payment.component';
 import { SuccessComponent } from './success/success.component';
+import { CartComponent } from './cart/cart/cart.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,12 @@ const routes: Routes = [
     path: 'success',
     component: SuccessComponent,
   },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+
 ];
 
 @NgModule({
